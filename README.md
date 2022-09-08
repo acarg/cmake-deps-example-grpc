@@ -12,6 +12,28 @@ example from gRPC.
 This project depends on gRPC, which has a few dependencies (listed
 [here](dependencies/)).
 
+### With a package manager
+
+Because gRPC is available in `pacman` (the Arch package manager), it can
+simply be used like this:
+
+1. Install the dependencies:
+
+    ```
+    pacman -S grpc
+    ```
+
+2. Build the project
+
+    ```
+    cmake -Bbuild -S.
+    cmake --build build
+    ```
+
+This is convenient on Arch, but this may not be the case on all platform.
+Building the dependencies from sources becomes very interesting when
+cross-compiling, for instance for Android.
+
 ### With the helper script
 
 1. Build the dependencies and install them into `./dependencies/install`:
