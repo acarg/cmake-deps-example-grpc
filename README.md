@@ -2,6 +2,7 @@
 
 # cmake-deps-examples
 An example showing how to handle dependencies with CMake, here using gRPC.
+It goes with [this blog post](https://www.acarg.ch/posts/cmake-deps/).
 
 This is building the [helloworld](https://github.com/grpc/grpc/tree/master/examples/cpp/helloworld)
 example from gRPC.
