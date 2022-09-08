@@ -1,0 +1,36 @@
+name: Build
+
+on:
+  push:
+    branches:
+    - 'main'
+  pull_request:
+    branches:
+    - '*'
+
+
+jobs:
+  ubuntu:
+    name: ${{ matrix.ubuntu_image }}
+    runs-on: ${{ matrix.ubuntu_image }}
+    strategy:
+      fail-fast: false
+      matrix:
+        ubuntu_image: [ubuntu-18.04, ubuntu-20.04, ubuntu-22.04]
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/cache@v2
+        id: cache
+        with:
+          path: ./install
+          key: ${{ github.job }}-${{ hashFiles('./dependencies/**') }}
+      - name: Configure and build dependencies
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: |
+            cmake -DCMAKE_PREFIX_PATH=${{ github.workspace }}/install -DCMAKE_INSTALL_PREFIX=install -Bdependencies/build -Sdependencies
+            cmake --build dependencies/build
+      - name: Configure and build project
+        run: |
+            cmake -DCMAKE_PREFIX_PATH=${{ github.workspace }}/install -Bbuild -S.
+            cmake --build build
+
