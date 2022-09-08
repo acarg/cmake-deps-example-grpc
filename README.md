@@ -1,6 +1,6 @@
 [![Build](https://github.com/acarg/cmake-deps-example-grpc/actions/workflows/main.yml/badge.svg)](https://github.com/acarg/cmake-deps-example-grpc/actions/workflows/main.yml)
 
-# cmake-deps-examples
+# cmake-deps-example-grpc
 An example showing how to handle dependencies with CMake, here using gRPC.
 It goes with [this blog post](https://www.acarg.ch/posts/cmake-deps/).
 
