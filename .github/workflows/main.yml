@@ -23,7 +23,7 @@ jobs:
         id: cache
         with:
           path: ./install
-          key: ${{ github.job }}-${{ hashFiles('./dependencies/**') }}
+          key: ${{ github.job }}-${{ matrix.ubuntu_image }}-${{ hashFiles('./dependencies/**') }}
       - name: Configure and build dependencies
         if: steps.cache.outputs.cache-hit != 'true'
         run: |
@@ -33,4 +33,40 @@ jobs:
         run: |
             cmake -DCMAKE_PREFIX_PATH=${{ github.workspace }}/install -Bbuild -S.
             cmake --build build
+
+  android:
+    name: ${{ matrix.name }}
+    runs-on: ubuntu-20.04
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: android-arm
+            arch: armeabi-v7a
+          - name: android-arm64
+            arch: arm64-v8a
+          - name: android-x86
+            arch: x86
+          - name: android-x86_64
+            arch: x86_64
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: 'recursive'
+      - uses: actions/cache@v2
+        id: cache
+        with:
+          path: ./install
+          key: ${{ github.job }}-${{ matrix.name }}-${{ hashFiles('./dependencies/**') }}
+      - name: Setup dockcross
+        run: docker run --rm dockcross/${{ matrix.name }} > ./dockcross-${{ matrix.name }}; chmod +x ./dockcross-${{ matrix.name }}
+      - name: Build and install dependencies
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: |
+          ./dockcross-${{ matrix.name }} cmake -DCMAKE_INSTALL_PREFIX=install -Bdependencies/build -Sdependencies
+          ./dockcross-${{ matrix.name }} cmake --build dependencies/build
+      - name: Build
+        run: |
+          ./dockcross-${{ matrix.name }} cmake -DCMAKE_PREFIX_PATH=/work/install -Bbuild -S.
+          ./dockcross-${{ matrix.name }} cmake --build build
 
