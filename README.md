@@ -3,42 +3,13 @@
 # cmake-deps-examples
 An example showing how to handle dependencies with CMake, here using gRPC.
 
-> Warning: This is not trying to do anything useful with gRPC! I just
-chose it as an example because it is not trivial to build its dependencies.
+This is building the [helloworld](https://github.com/grpc/grpc/tree/master/examples/cpp/helloworld)
+example from gRPC.
 
 ## How to build
 
 This project depends on gRPC, which has a few dependencies (listed
 [here](dependencies/)).
-
-### With a package manager
-
-I wanted to show a "simple build" with a package manager, using Pacman
-from ArchLinux. Proxygen is not in the default repo, but it is in the AUR.
-That means that it could be installed e.g. using `yay`.
-
-It should have been like this:
-
-1. Install the dependencies:
-
-    ```
-    yay -S proxygen
-    ```
-
-2. Build the project
-
-    ```
-    cmake -Bbuild -S.
-    cmake --build build
-    ```
-
-However, those packages are not super up-to-date on the AUR and fail to
-build (at least `folly` and `wangle` fail, that's where I gave up). So
-I failed installing Proxygen from there.
-
-Which makes a point: if you decide to depend on a package manager, then...
-you depend on it. In this case the user-maintained packages showed their
-limits.
 
 ### With the helper script
 
