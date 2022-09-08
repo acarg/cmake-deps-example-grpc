@@ -65,8 +65,3 @@ jobs:
         run: |
           ./dockcross-${{ matrix.name }} cmake -DCMAKE_INSTALL_PREFIX=install -Bdependencies/build -Sdependencies
           ./dockcross-${{ matrix.name }} cmake --build dependencies/build
-      - name: Build
-        run: |
-          ./dockcross-${{ matrix.name }} cmake -DCMAKE_PREFIX_PATH=/work/install -Bbuild -S.
-          ./dockcross-${{ matrix.name }} cmake --build build
-
