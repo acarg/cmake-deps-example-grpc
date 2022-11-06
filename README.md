@@ -57,7 +57,7 @@ by providing the path: `-DCMAKE_PREFIX_PATH=/path/to/dependencies/install`.
 ## About the CI
 
 The CI runs the helper script. That's very convenient because as a result,
-it does not result in a custom package manager. Also it gets very useful
+it does not require a custom package manager. Also it gets very useful
 for cross-compiling.
 
 Finally, because the dependencies are installed locally, it's extremely
