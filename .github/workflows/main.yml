@@ -63,5 +63,5 @@ jobs:
       - name: Build and install dependencies
         if: steps.cache.outputs.cache-hit != 'true'
         run: |
-          ./dockcross-${{ matrix.name }} cmake -DCMAKE_INSTALL_PREFIX=install -Bdependencies/build -Sdependencies
+          ./dockcross-${{ matrix.name }} cmake -DCMAKE_PREFIX_PATH=${{ github.workspace }}/install -DCMAKE_INSTALL_PREFIX=install -Bdependencies/build -Sdependencies
           ./dockcross-${{ matrix.name }} cmake --build dependencies/build
