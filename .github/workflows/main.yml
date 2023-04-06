@@ -16,10 +16,10 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        ubuntu_image: [ubuntu-18.04, ubuntu-20.04, ubuntu-22.04]
+        ubuntu_image: [ubuntu-22.04]
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/cache@v2
+      - uses: actions/checkout@v3
+      - uses: actions/cache@v3
         id: cache
         with:
           path: ./install
@@ -53,7 +53,7 @@ jobs:
       - uses: actions/checkout@v3
         with:
           submodules: 'recursive'
-      - uses: actions/cache@v2
+      - uses: actions/cache@v3
         id: cache
         with:
           path: ./install
@@ -63,5 +63,5 @@ jobs:
       - name: Build and install dependencies
         if: steps.cache.outputs.cache-hit != 'true'
         run: |
-          ./dockcross-${{ matrix.name }} cmake -DCMAKE_PREFIX_PATH=${{ github.workspace }}/install -DCMAKE_INSTALL_PREFIX=install -Bdependencies/build -Sdependencies
+          ./dockcross-${{ matrix.name }} cmake -DCMAKE_PREFIX_PATH=/work/install -DCMAKE_INSTALL_PREFIX=install -Bdependencies/build -Sdependencies
           ./dockcross-${{ matrix.name }} cmake --build dependencies/build
